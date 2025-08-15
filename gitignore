@@ -4,21 +4,12 @@ __pycache__/
 *.pyo
 *.pyd
 *.sqlite3
-*.env
+
+# Virtual environment
 venv/
 
-# IDEs
+# IDE
 .idea/
-.vscode/
 
-# Logs
-*.log
-
-# Sistema
-.DS_Store
-Thumbs.db
-
-# Distribuição / build
-build/
-dist/
-*.egg-info/
+# Environment files
+.env
