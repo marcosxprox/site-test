@@ -21,15 +21,17 @@ def get_db():
 
 @router.post("/", response_model=schemas.UserOut)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    # Verificar captcha
+    # Verificar captcha v3
     recaptcha_secret = os.getenv("RECAPTCHA_SECRET")
     res = requests.post(
         "https://www.google.com/recaptcha/api/siteverify",
         data={"secret": recaptcha_secret, "response": user.token}
     )
     result = res.json()
-    if not result.get("success"):
-        raise HTTPException(status_code=400, detail="Captcha inválido")
+
+    # Verifica sucesso e score mínimo
+    if not result.get("success") or result.get("score", 0) < 0.5:
+        raise HTTPException(status_code=400, detail="Captcha inválido ou suspeito")
 
     # Hashear senha
     hashed = pwd_context.hash(user.password)
