@@ -34,7 +34,7 @@
             const token = await grecaptcha.execute('SUA_SITE_KEY', {action: 'register'});
 
             try {
-                const res = await fetch("http://127.0.0.1:8000/users/", {
+                const res = await fetch("https://site-test-production.up.railway.app/users/", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, email, password, token })
